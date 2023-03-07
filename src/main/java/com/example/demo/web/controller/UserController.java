@@ -1,5 +1,7 @@
-package com.example.demo.controller;
+package com.example.demo.web.controller;
 
+import com.example.demo.config.exception.InvalidException;
+import com.example.demo.config.exception.VsException;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
