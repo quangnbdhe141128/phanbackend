@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.config.security.AccountDetailsImpl;
-import com.example.demo.model.Account;
+import com.example.demo.domain.model.Account;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.service.AccountDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;

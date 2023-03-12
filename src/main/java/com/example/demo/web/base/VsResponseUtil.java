@@ -8,14 +8,14 @@ import org.springframework.http.ResponseEntity;
 public class VsResponseUtil {
 
     public static ResponseEntity<RestData<?>> ok(HttpHeaders headers) {
-        return ok(headers, HttpStatus.OK, null);
+        return ok( HttpStatus.OK, null);
     }
 
-    public static ResponseEntity<RestData<?>> ok(HttpHeaders headers, Object data) {
-        return ok(headers, HttpStatus.OK, data);
+    public static ResponseEntity<RestData<?>> ok( Object data) {
+        return ok(HttpStatus.OK, data);
     }
 
-    public static ResponseEntity<RestData<?>> ok(HttpHeaders headers, HttpStatus status, Object data) {
+    public static ResponseEntity<RestData<?>> ok(HttpStatus status, Object data) {
         RestData<?> response = new RestData<>(data);
         return new ResponseEntity<>(response, status);
     }
