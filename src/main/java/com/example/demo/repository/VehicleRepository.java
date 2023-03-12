@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     @Query(value = "SELECT p.* FROM vehicle p LEFT JOIN vehicle_type t ON  t.id = p.vehicle_type_id" +
-            "  WHERE t.id = :#{#request.vehicleType} AND p.location = :#{#request.location}" +
+            "  WHERE t.id = :#{#request.vehicleType} AND p.location LIKE CONCAT('%',:#{#request.location},'%')" +
             " AND (:#{#request.seatType} IS NULL OR  p.seat_type_id = :#{#request.seatType})" +
             " AND (:#{#request.vehicleCompany} IS NULL OR ( p.vehicle_company_id = :#{#request.vehicleCompany}))" +
             " AND(:#{#request.fuel} IS NULL OR ( p.fuel_type_id = :#{#request.fuel}))" +
@@ -25,7 +25,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     List<Vehicle> getVehicleeOrderPriceDESC(@Param("request") HomeBookingRequest request);
 
     @Query(value = "SELECT p.* FROM vehicle p LEFT JOIN vehicle_type t ON  t.id = p.vehicle_type_id" +
-            "  WHERE t.id = :#{#request.vehicleType} AND p.location = :#{#request.location}" +
+            "  WHERE t.id = :#{#request.vehicleType} AND p.location LIKE CONCAT('%',:#{#request.location},'%')" +
             " AND (:#{#request.seatType} IS NULL OR  p.seat_type_id = :#{#request.seatType})" +
             " AND (:#{#request.vehicleCompany} IS NULL OR ( p.vehicle_company_id = :#{#request.vehicleCompany}))" +
             " AND(:#{#request.fuel} IS NULL OR ( p.fuel_type_id = :#{#request.fuel}))" +
