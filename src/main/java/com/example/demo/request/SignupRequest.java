@@ -1,7 +1,6 @@
 package com.example.demo.request;
 
-import com.example.demo.model.ERole;
-import com.example.demo.model.Role;
+import com.example.demo.domain.model.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +9,9 @@ import lombok.Setter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -39,4 +41,6 @@ public class SignupRequest {
     private String cardId;
 
     private String gender;
+
+    private LocalDate bod;
 }

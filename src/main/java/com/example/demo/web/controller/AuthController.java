@@ -2,8 +2,8 @@ package com.example.demo.web.controller;
 
 import com.example.demo.config.security.AccountDetailsImpl;
 import com.example.demo.config.security.JwtUtils;
-import com.example.demo.model.Account;
-import com.example.demo.model.Role;
+import com.example.demo.domain.model.Account;
+import com.example.demo.domain.model.Role;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.request.LoginRequest;
@@ -19,7 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,14 +67,13 @@ public class AuthController {
         }
 
         // Create new user's account
-            Account user = new Account(signUpRequest.getUsername(), signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()), new Role(signUpRequest.getRole()), false, signUpRequest.getName(), signUpRequest.getPhone(), signUpRequest.getAddress(), signUpRequest.getCardId(), signUpRequest.getGender(), 100L);
+        Account user = new Account(signUpRequest.getUsername(), signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()), new Role(signUpRequest.getRole()), false, signUpRequest.getName(), signUpRequest.getPhone(), signUpRequest.getAddress(), signUpRequest.getCardId(), signUpRequest.getGender(), 100L, signUpRequest.getBod());
 
-            String strRole = signUpRequest.getRole().name();
-            Role userRole = roleRepository.findByName(signUpRequest.getRole()).orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            user.setRole(userRole);
+        String strRole = signUpRequest.getRole().name();
+        Role userRole = roleRepository.findByName(signUpRequest.getRole()).orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        user.setRole(userRole);
 
-            userRepository.save(user);
-
+        userRepository.save(user);
 
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

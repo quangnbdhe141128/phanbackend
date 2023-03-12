@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.domain.model;
 
 import lombok.*;
 import org.hibernate.annotations.Cascade;
@@ -7,9 +7,11 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "account", uniqueConstraints = {@UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")})
+@Table(name = "account")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,16 +21,13 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     @Size(max = 20)
     private String username;
 
-    @NotBlank
     @Size(max = 50)
     @Email
     private String email;
 
-    @NotBlank
     @Size(max = 120)
     private String password;
 
@@ -55,7 +54,11 @@ public class Account {
     @Column(name = "point")
     private Long point;
 
-    public Account(String username, String email, String password, Role role, Boolean isBLock, String name, String phone, String address, String cardId, String gender, Long point) {
+    @Column(name = "bod")
+    private LocalDate bod;
+
+
+    public Account(String username, String email, String password, Role role, Boolean isBLock, String name, String phone, String address, String cardId, String gender, Long point, LocalDate bod) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -67,5 +70,6 @@ public class Account {
         this.cardId = cardId;
         this.gender = gender;
         this.point = point;
+        this.bod = bod;
     }
 }
