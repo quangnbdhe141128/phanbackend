@@ -22,7 +22,7 @@ public class BookingController extends BaseController {
     @Autowired
     private BookingService bookingService;
 
-    @GetMapping("view")
+    @PostMapping("view")
     public ResponseEntity<?> bookingHome(@Valid @RequestBody HomeBookingRequest request) {
         HomeBookingResponse response = bookingService.getVehicle(request);
         return successResponse(response);
@@ -34,7 +34,7 @@ public class BookingController extends BaseController {
         return successResponse(response);
     }
 
-    @GetMapping("{id}")
+    @PostMapping("{id}")
     public ResponseEntity<?> bookingDetail(@PathVariable Long id) {
         return successResponse(bookingService.bookingDetails(id));
     }
