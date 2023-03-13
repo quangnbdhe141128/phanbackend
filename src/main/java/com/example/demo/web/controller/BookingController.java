@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/anonymous/booking")
+@RequestMapping("/api/anonymous/booking")
 public class BookingController extends BaseController {
 
     @Autowired

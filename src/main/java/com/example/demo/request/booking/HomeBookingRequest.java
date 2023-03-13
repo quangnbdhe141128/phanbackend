@@ -6,8 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.*;
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -20,10 +21,10 @@ public class HomeBookingRequest implements Input {
     private Long vehicleType;
 
     @NotNull
-    private LocalDateTime fromDate;
+    private LocalDate fromDate;
 
     @NotNull
-    private LocalDateTime toDate;
+    private LocalDate toDate;
 
     private boolean orderPrice;
 

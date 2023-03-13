@@ -4,13 +4,13 @@ import com.example.demo.domain.dto.FeedBackDto;
 import com.example.demo.domain.dto.VehicleDetailDto;
 import com.example.demo.domain.model.*;
 import com.example.demo.repository.*;
-import com.example.demo.response.vehicle.VehicleDetailsResponse;
 import com.example.demo.response.vehicle.GetVehiclesResponse;
+import com.example.demo.response.vehicle.VehicleDetailsResponse;
 import com.example.demo.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -103,7 +103,7 @@ public class VehicleServiceImpl implements VehicleService {
         response.setRule(vehicle.get().getRule());
 
         List<String> images = new ArrayList<>();
-        for (Image image : vehicle.get().getImageList()){
+        for (Image image : vehicle.get().getImageList()) {
             images.add(image.getName());
         }
         response.setImageList(images);
@@ -112,18 +112,18 @@ public class VehicleServiceImpl implements VehicleService {
         response.setSeat(vehicle.get().getSeatType().getName());
 
         List<String> featureList = new ArrayList<>();
-        for (Feature feature : vehicle.get().getFeatureList()){
+        for (Feature feature : vehicle.get().getFeatureList()) {
             featureList.add(feature.getName());
         }
         response.setFeatureList(featureList);
         response.setPrice(vehicle.get().getPrice());
         Long totalRun = 0L;
         List<FeedBackDto> feedBackList = new ArrayList<>();
-        for (Booking booking : vehicle.get().getBookingList()){
-            if(booking.getStatus() == 1 && booking.getToDate().isBefore(LocalDateTime.now())){
+        for (Booking booking : vehicle.get().getBookingList()) {
+            if (booking.getStatus() == 1 && booking.getToDate().isBefore(LocalDate.now())) {
                 totalRun++;
-                for (FeedBack feedBack : booking.getFeedBackList()){
-                    if(feedBack.isRoleType()){
+                for (FeedBack feedBack : booking.getFeedBackList()) {
+                    if (feedBack.isRoleType()) {
                         feedBackList.add(new FeedBackDto(booking.getAccount().getName(), feedBack.getPoint(), feedBack.getContent()));
                     }
                 }

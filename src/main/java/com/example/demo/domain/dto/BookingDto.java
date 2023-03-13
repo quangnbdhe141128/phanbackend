@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -23,9 +22,9 @@ public class BookingDto {
     private LocalDate bod;
     private String cardId;
     private String address;
-    private LocalDateTime createDate;
-    private LocalDateTime from;
-    private LocalDateTime  to;
+    private LocalDate createDate;
+    private LocalDate from;
+    private LocalDate to;
 
     private Long point;
     private int status;

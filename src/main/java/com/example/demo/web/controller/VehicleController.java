@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/anonymous/vehicle")
+@RequestMapping("/api/anonymous/vehicle")
 public class VehicleController extends BaseController{
 
     @Autowired

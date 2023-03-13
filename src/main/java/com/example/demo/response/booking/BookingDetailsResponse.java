@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,8 +16,8 @@ import java.time.LocalDateTime;
 public class BookingDetailsResponse implements Output {
     private VehicleDetailsResponse vehicleDetails;
 
-    private LocalDateTime from;
-    private LocalDateTime to;
+    private LocalDate from;
+    private LocalDate to;
 
     private String location;
 

@@ -5,7 +5,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +21,10 @@ public class Booking {
     private Long id;
 
     @NotNull
-    private LocalDateTime fromDate;
+    private LocalDate fromDate;
 
     @NotNull
-    private LocalDateTime toDate;
+    private LocalDate toDate;
 
 
     @NotNull
@@ -45,7 +45,7 @@ public class Booking {
     private Vehicle vehicle;
 
     @NotNull
-    private LocalDateTime createDate;
+    private LocalDate createDate;
 
     private int status;
 

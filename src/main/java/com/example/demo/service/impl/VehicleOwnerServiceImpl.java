@@ -14,7 +14,7 @@ import com.example.demo.service.VehicleOwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -123,19 +123,19 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
     }
 
     public String setStatusString(Booking booking) {
-        if (booking.getStatus() == 1 && (LocalDateTime.now().isAfter(booking.getFromDate()) && LocalDateTime.now().isBefore(booking.getToDate()))) {
+        if (booking.getStatus() == 1 && (LocalDate.now().isAfter(booking.getFromDate()) && LocalDate.now().isBefore(booking.getToDate()))) {
             return "Đang diễn ra";
         }
-        if (booking.getStatus() == 1 && LocalDateTime.now().isAfter(booking.getToDate())) {
+        if (booking.getStatus() == 1 && LocalDate.now().isAfter(booking.getToDate())) {
             return "Kết thúc";
         }
-        if (booking.getStatus() == 1 && LocalDateTime.now().isBefore(booking.getFromDate())) {
+        if (booking.getStatus() == 1 && LocalDate.now().isBefore(booking.getFromDate())) {
             return "Chấp nhận";
         }
-        if (booking.getStatus() == 0 && LocalDateTime.now().isBefore(booking.getToDate())) {
+        if (booking.getStatus() == 0 && LocalDate.now().isBefore(booking.getToDate())) {
             return "Đang chờ";
         }
-        if (booking.getStatus() == 2 || (booking.getStatus() == 0 && LocalDateTime.now().isAfter(booking.getFromDate()))) {
+        if (booking.getStatus() == 2 || (booking.getStatus() == 0 && LocalDate.now().isAfter(booking.getFromDate()))) {
             return "Từ chối";
         }
         return "";

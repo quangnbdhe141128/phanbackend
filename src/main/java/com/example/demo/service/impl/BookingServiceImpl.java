@@ -17,7 +17,7 @@ import com.example.demo.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +41,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public HomeBookingResponse getVehicle(HomeBookingRequest request) {
-        LocalDateTime dateTime = LocalDateTime.now();
+        LocalDate dateTime = LocalDate.now();
         if (request.getFromDate().isBefore(dateTime) || request.getToDate().isBefore(dateTime) || request.getFromDate().isAfter(request.getToDate())) {
             throw new InvalidException(" Thời gian đăng ký phải ơ tương lai ", " Thời gian đăng ký phải ơ tương lai");
         }
@@ -108,7 +108,7 @@ public class BookingServiceImpl implements BookingService {
         }
         Booking booking = new Booking();
         booking.setAddress(vehicle.get().getLocation());
-        booking.setCreateDate(LocalDateTime.now());
+        booking.setCreateDate(LocalDate.now());
         booking.setFromDate(request.getFrom());
         booking.setToDate(request.getTo());
         booking.setStatus(0);

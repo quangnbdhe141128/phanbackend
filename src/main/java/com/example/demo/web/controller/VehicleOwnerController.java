@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/vehicle-owner")
+@RequestMapping("/api/vehicle-owner")
 public class VehicleOwnerController extends BaseController {
 
     @Autowired
