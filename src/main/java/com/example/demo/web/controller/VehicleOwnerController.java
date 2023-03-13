@@ -24,7 +24,7 @@ public class VehicleOwnerController extends BaseController {
     private VehicleOwnerService vehicleOwnerService;
 
 
-    @GetMapping("/booking")
+    @PostMapping("/booking")
     @PreAuthorize("hasRole('ROLE_RENTAL') OR hasRole('ROLE_SHOP')")
     public ResponseEntity<?> bookingDetail(@Valid @RequestBody OwnerBookingRequest request) {
         return successResponse(vehicleOwnerService.listBooking(request));
