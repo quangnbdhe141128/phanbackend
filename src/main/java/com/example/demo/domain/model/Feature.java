@@ -29,4 +29,7 @@ public class Feature {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Vehicle vehicle;
 
+    public Feature(String name) {
+        this.name = name;
+    }
 }

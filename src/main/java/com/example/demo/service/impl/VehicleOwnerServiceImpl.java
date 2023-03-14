@@ -2,13 +2,13 @@ package com.example.demo.service.impl;
 
 import com.example.demo.config.exception.InvalidException;
 import com.example.demo.domain.dto.BookingDto;
-import com.example.demo.domain.model.Booking;
-import com.example.demo.domain.model.Image;
-import com.example.demo.domain.model.Vehicle;
-import com.example.demo.repository.BookingRepository;
-import com.example.demo.repository.VehicleRepository;
+import com.example.demo.domain.dto.VehicleDto;
+import com.example.demo.domain.model.*;
+import com.example.demo.repository.*;
+import com.example.demo.request.vehicle_owner.CreateVehicleRequest;
 import com.example.demo.request.vehicle_owner.EditBookingRequest;
 import com.example.demo.request.vehicle_owner.OwnerBookingRequest;
+import com.example.demo.response.vehicle_owner.GetVehiclesResponse;
 import com.example.demo.response.vehicle_owner.OwnerBookingResponse;
 import com.example.demo.service.VehicleOwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,22 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
     VehicleRepository vehicleRepository;
     @Autowired
     BookingRepository bookingRepository;
+
+    @Autowired
+    VehicleTypeRepository vehicleTypeRepository;
+    @Autowired
+    VehicleCompanyRepository vehicleCompanyRepository;
+    @Autowired
+    TranmistionTypeRepository tranmistionTypeRepository;
+    @Autowired
+    SeatTypeRepository seatTypeRepository;
+    @Autowired
+    FuelTypeRepository fuelTypeRepository;
+    @Autowired
+    AccountRepository accountRepository;
+
+    @Autowired
+    ColorTypeRepository colorTypeRepository;
 
 
     @Override
@@ -70,7 +86,7 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
             dto.setPrice(booking.getVehicle().getPrice());
 
             List<String> images = new ArrayList<>();
-            for (Image image : booking.getVehicle().getImageList()){
+            for (Image image : booking.getVehicle().getImageList()) {
                 images.add(image.getName());
             }
 
@@ -87,7 +103,7 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 
         Optional<Vehicle> vehicle = vehicleRepository.findById(booking.getVehicle().getId());
         for (Booking book : vehicle.get().getBookingList()) {
-            if(booking.getId().equals(book.getId())){
+            if (booking.getId().equals(book.getId())) {
                 continue;
             }
             if (((request.getFrom() != null && request.getFrom().isAfter(book.getFromDate()) && request.getFrom().isBefore(book.getToDate()))
@@ -95,31 +111,93 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
                 throw new InvalidException("Xe đã được đặt tại thời gian bạn", "Xe đã được đặt tại thời gian bạn");
             }
         }
-        if(request.getName() != null &&  !request.getName().isBlank()){
+        if (request.getName() != null && !request.getName().isBlank()) {
             booking.getAccount().setName(request.getName());
         }
-        if(request.getCardId() != null &&  !request.getCardId().isBlank()){
+        if (request.getCardId() != null && !request.getCardId().isBlank()) {
             booking.getAccount().setCardId(request.getCardId());
         }
-        if(request.getPhone() != null &&  !request.getPhone().isBlank()){
+        if (request.getPhone() != null && !request.getPhone().isBlank()) {
             booking.getAccount().setPhone(request.getPhone());
         }
-        if(request.getFrom() != null){
+        if (request.getFrom() != null) {
             booking.setFromDate(request.getFrom());
         }
-        if(request.getTo() != null){
+        if (request.getTo() != null) {
             booking.setToDate(request.getTo());
         }
-        if(request.getTotal() != null){
+        if (request.getTotal() != null) {
             booking.setTotalPrice(request.getTotal());
         }
-        if(request.getIsAccept() != null && request.getIsAccept().equals(true)){
+        if (request.getIsAccept() != null && request.getIsAccept().equals(true)) {
             booking.setStatus(1);
         }
-        if(request.getIsAccept() != null && request.getIsAccept().equals(false)){
+        if (request.getIsAccept() != null && request.getIsAccept().equals(false)) {
             booking.setStatus(2);
         }
+        if (request.getBod() != null) {
+            booking.getAccount().setBod(request.getBod());
+        }
         bookingRepository.save(booking);
+    }
+
+    @Override
+    public GetVehiclesResponse getVehicles(Long id) {
+        GetVehiclesResponse response = new GetVehiclesResponse();
+
+        List<Vehicle> list = vehicleRepository.findByAccount_Id(id);
+        List<VehicleDto> dtos = new ArrayList<>();
+        for (Vehicle vehicle : list) {
+            dtos.add(new VehicleDto(vehicle.getId(), vehicle.getName(), vehicle.getLicensePlates(), vehicle.getStatus()));
+        }
+        response.setList(dtos);
+
+        return response;
+    }
+
+    @Override
+    public void createVehicle(CreateVehicleRequest request) {
+        Account account = accountRepository.getById(request.getAccountId());
+        VehicleType type = vehicleTypeRepository.getById(request.getType());
+        ColorType colorType = colorTypeRepository.getById(request.getColor());
+        FuelType fuelType = fuelTypeRepository.getById(request.getFuel());
+        SeatType seatType = seatTypeRepository.getById(request.getSeat());
+        TranmistionType tranmistionType = tranmistionTypeRepository.getById(request.getTranmistion());
+        VehicleCompany vehicleCompany = vehicleCompanyRepository.getById(request.getVehicleCompany());
+
+        Vehicle vehicle = new Vehicle();
+        vehicle.setName(request.getName());
+        vehicle.setAccount(account);
+        vehicle.setVehicleType(type);
+        vehicle.setColorType(colorType);
+        vehicle.setFuelType(fuelType);
+        vehicle.setSeatType(seatType);
+        vehicle.setTranmistionType(tranmistionType);
+        vehicle.setVehicleCompany(vehicleCompany);
+        vehicle.setPrice(request.getPrice());
+        vehicle.setLocation(request.getLocation());
+        List<Image> imageList = new ArrayList<>();
+        for (String s : request.getImageList()){
+            imageList.add(new Image(s));
+        }
+        vehicle.setImageList(imageList);
+
+        List<Feature> featureList = new ArrayList<>();
+        for (String s : request.getFeatureList()){
+            featureList.add(new Feature(s));
+        }
+        vehicle.setFeatureList(featureList);
+        vehicle.setPoint(100L);
+        vehicle.setRule(request.getRule());
+        vehicle.setLicensePlates(request.getLicensePlates());
+
+        vehicleRepository.save(vehicle);
+
+    }
+
+    @Override
+    public void deleteVehicle(Long id) {
+        vehicleRepository.deleteVehicleById(id);
     }
 
     public String setStatusString(Booking booking) {

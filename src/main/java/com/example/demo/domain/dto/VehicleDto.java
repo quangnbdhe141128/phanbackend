@@ -16,4 +16,21 @@ public class VehicleDto {
     private String location;
     private String urlImage;
     private Long price;
+    private String licensePlates;
+    private Boolean status;
+
+    public VehicleDto(Long id, String name, String location, String urlImage, Long price) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.urlImage = urlImage;
+        this.price = price;
+    }
+
+    public VehicleDto(Long id, String name, String licensePlates, Boolean status) {
+        this.id = id;
+        this.name = name;
+        this.licensePlates = licensePlates;
+        this.status = status;
+    }
 }

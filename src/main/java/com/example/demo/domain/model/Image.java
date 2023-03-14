@@ -28,4 +28,7 @@ public class Image {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Vehicle vehicle;
 
+    public Image(String name) {
+        this.name = name;
+    }
 }
