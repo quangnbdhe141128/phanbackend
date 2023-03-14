@@ -24,6 +24,8 @@ public class EditBookingRequest implements Input {
 
    private Long bookingId;
 
+   private LocalDate bod;
+
    private Boolean isAccept;
 
 }

@@ -89,7 +89,13 @@ public class Vehicle {
 
     private Long point;
 
+    @Column(name = "rule")
     private String rule;
 
     private Boolean status;
+
+    @NotBlank
+    @Column(name = "license_plates")
+    private String licensePlates;
+
 }

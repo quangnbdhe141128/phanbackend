@@ -2,7 +2,9 @@ package com.example.demo.web.controller;
 
 import com.example.demo.request.booking.BookingRequest;
 import com.example.demo.request.booking.HomeBookingRequest;
+import com.example.demo.request.vehicle_owner.CreateVehicleRequest;
 import com.example.demo.request.vehicle_owner.EditBookingRequest;
+import com.example.demo.request.vehicle_owner.GetVehiclesRequest;
 import com.example.demo.request.vehicle_owner.OwnerBookingRequest;
 import com.example.demo.response.booking.BookingResponse;
 import com.example.demo.response.booking.HomeBookingResponse;
@@ -37,4 +39,23 @@ public class VehicleOwnerController extends BaseController {
         return successResponse();
     }
 
+    @PostMapping("/list")
+    @PreAuthorize("hasRole('ROLE_RENTAL') OR hasRole('ROLE_SHOP')")
+    public ResponseEntity<?> getVehicle(@Valid @RequestBody GetVehiclesRequest request) {
+        return successResponse(vehicleOwnerService.getVehicles(request.getOwnerId()));
+    }
+
+    @PostMapping("/create")
+    @PreAuthorize("hasRole('ROLE_RENTAL') OR hasRole('ROLE_SHOP')")
+    public ResponseEntity<?> createVehicle(@Valid @RequestBody CreateVehicleRequest request) {
+        vehicleOwnerService.createVehicle(request);
+        return successResponse();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_RENTAL') OR hasRole('ROLE_SHOP')")
+    public ResponseEntity<?> deleteVehicle(@PathVariable Long id) {
+        vehicleOwnerService.deleteVehicle(id);
+        return successResponse();
+    }
 }
