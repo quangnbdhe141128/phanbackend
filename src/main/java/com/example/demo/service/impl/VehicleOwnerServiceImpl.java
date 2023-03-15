@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.config.exception.InvalidException;
 import com.example.demo.domain.dto.BookingDto;
+import com.example.demo.domain.dto.FeedBackDto;
 import com.example.demo.domain.dto.VehicleDto;
 import com.example.demo.domain.model.*;
 import com.example.demo.repository.*;
@@ -84,6 +85,13 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
             dto.setStatusString(status);
             dto.setTotal(booking.getTotalPrice());
             dto.setPrice(booking.getVehicle().getPrice());
+            List<FeedBackDto> list1 = new ArrayList<>();
+            for (FeedBack feedBack : booking.getFeedBackList()){
+                if(feedBack.isRoleType()){
+                    list1.add(new FeedBackDto(booking.getAccount().getName(),feedBack.getPoint(),feedBack.getContent()));
+                }
+            }
+            dto.setFeedbacks(list1);
 
             List<String> images = new ArrayList<>();
             for (Image image : booking.getVehicle().getImageList()) {
