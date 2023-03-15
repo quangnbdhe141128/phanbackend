@@ -35,4 +35,6 @@ public class BookingDto {
 
     private Long price;
     private Long total;
+
+    private List<FeedBackDto> feedbacks;
 }

@@ -34,7 +34,7 @@ public class BookingController extends BaseController {
         return successResponse(response);
     }
 
-    @PostMapping("{id}")
+    @GetMapping ("{id}")
     public ResponseEntity<?> bookingDetail(@PathVariable Long id) {
         return successResponse(bookingService.bookingDetails(id));
     }

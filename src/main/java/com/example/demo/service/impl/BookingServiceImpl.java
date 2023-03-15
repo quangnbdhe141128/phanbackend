@@ -75,6 +75,9 @@ public class BookingServiceImpl implements BookingService {
     public BookingResponse booking(BookingRequest request) {
         BookingResponse response = new BookingResponse();
         Optional<Vehicle> vehicle = vehicleRepository.findById(request.getVehicleId());
+        if(request.getFrom().isBefore(LocalDate.now().plusDays(1))){
+            throw new InvalidException("xe phải đặt sau ngày hiện tại","xe phải đặt sau ngày hiện tại");
+        }
         for (Booking booking : vehicle.get().getBookingList()) {
             if (((request.getFrom().isAfter(booking.getFromDate()) && request.getFrom().isBefore(booking.getToDate()))
                     || (request.getTo().isAfter(booking.getFromDate()) && request.getTo().isBefore(booking.getToDate()))) && booking.getStatus() == 1) {
